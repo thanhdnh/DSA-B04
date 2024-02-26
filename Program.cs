@@ -4,12 +4,17 @@
     {
         Console.Clear();
 
-        Array ar = Array.CreateInstance(typeof(int), 5);
+        /*Array ar = Array.CreateInstance(typeof(int), 5);
         ar.SetValue(3, 0); ar.SetValue(7, 1);
         ar.SetValue(8, 2); ar.SetValue(4, 3);
         ar.SetValue(11, 4);
         int value = 4;
         int res = RecuSearch2(ar, value);
+        System.Console.WriteLine("Result: {0}", res);*/
+
+        int[] ar = new int[]{3, 7, 2, 4};
+        int value = 4;
+        int res = SentSearch(ar, value);
         System.Console.WriteLine("Result: {0}", res);
 
         Console.ReadLine();
@@ -55,5 +60,19 @@
             //Gọi đệ quy RecuSearch2(mảng_mới, value)
             return RecuSearch2(newarr, value);
         }
+    }
+
+    static int SentSearch(int[] arr, int value){
+        int x = arr[arr.Length - 1];
+        arr[arr.Length-1] = value;
+        int i=0;
+        while(arr[i]!=value)
+            i++;
+        arr[arr.Length-1] = x; //Không được thay đổi dữ liệu ban đầu
+        if(i<arr.Length-1 || arr[arr.Length-1]==value)
+        //if(i<arr.Length-1 || x==value)
+            return i;
+        else
+            return -1;
     }
 }

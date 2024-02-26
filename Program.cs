@@ -12,9 +12,14 @@
         int res = RecuSearch2(ar, value);
         System.Console.WriteLine("Result: {0}", res);*/
 
-        int[] ar = new int[]{3, 7, 2, 4};
+        /*int[] ar = new int[]{3, 7, 2, 4};
         int value = 4;
         int res = SentSearch(ar, value);
+        System.Console.WriteLine("Result: {0}", res);*/
+
+        int[] ar = new int[]{1, 3, 5, 9, 13};
+        int value = 9;
+        int res = BinSearch(ar, value);
         System.Console.WriteLine("Result: {0}", res);
 
         Console.ReadLine();
@@ -74,5 +79,24 @@
             return i;
         else
             return -1;
+    }
+    
+    static int BinSearch(int[] arr, int value){
+        int L = 0, R = arr.Length-1;
+        while(true){
+            int mid = (R+L)/2;//(int)Math.Floor((R-L)/2.0);
+            if(arr[mid]==value)
+                return mid;
+            else if(arr[mid]<value){
+                //Tìm bên phải
+                L = mid+1;
+            }else{
+                //Tìm bên trái
+                R = mid-1;
+            }
+        }
+    }
+    static int BinSearch2(int[] arr, int value, int from, int to){
+        return 0;
     }
 }

@@ -1,102 +1,57 @@
 ﻿public class Program
 {
-    public static void Main(string[] args)
-    {
-        Console.Clear();
-
-        /*Array ar = Array.CreateInstance(typeof(int), 5);
-        ar.SetValue(3, 0); ar.SetValue(7, 1);
-        ar.SetValue(8, 2); ar.SetValue(4, 3);
-        ar.SetValue(11, 4);
-        int value = 4;
-        int res = RecuSearch2(ar, value);
-        System.Console.WriteLine("Result: {0}", res);*/
-
-        /*int[] ar = new int[]{3, 7, 2, 4};
-        int value = 4;
-        int res = SentSearch(ar, value);
-        System.Console.WriteLine("Result: {0}", res);*/
-
-        int[] ar = new int[]{1, 3, 5, 9, 13};
-        int value = 9;
-        int res = BinSearch(ar, value);
-        System.Console.WriteLine("Result: {0}", res);
-
-        Console.ReadLine();
-    }
-
-    static int SeqSearch(int[] arr, int value)
-    {
-        /*for (int i = 0; i < arr.Length; i++)
-            if (arr[i] == value)
-                return i;
-        return -1;*/
-        /*int i = 0;
+    public static int SeqSearch(int[] arr, int value){
+        int i = 0;
         while(arr[i]!=value)
             i++;
-        return i;*/
+        return i;
+    }
+    public static int SeqSearchLast(int[] arr, int value){
         int i = arr.Length - 1;
         while(arr[i]!=value)
             i--;
         return i;
     }
-    static int RecuSearch(int[] arr, int from, int value){
-        if(arr[from] == value)
+    public static int RecuSearch(int[] arr, int from, int value){
+        if(arr[from]==value)
             return from;
         else
-            return RecuSearch(arr, from++, value);
+            return RecuSearch(arr, from+1, value);
     }
-    static int RecuSearch2(Array arr, int value){
-        if((int)arr.GetValue(arr.GetLowerBound(0))==value)//nếu phần tử đầu tiên của arr bằng value
-            return arr.GetLowerBound(0);//thì return chỉ số đầu tiên này
+    public static int RecuSearch2(Array arr, int value){
+        //Nếu phần tử đầu tiên bằng value
+        if((int)arr.GetValue(arr.GetLowerBound(0))==value)
+        //  thì return nó
+            return (int)arr.GetLowerBound(0);
+        //Ngược lại
         else{
-            //Lấy chỉ số thứ 2 của mảng
-            int x = arr.GetLowerBound(0) + 1;
-            //Lấy độ dài của phần còn lại của mảng
-            int d = arr.GetLength(0) - 1;
-            //Tạo mảng mới với chỉ số là từ chỉ số thứ 2
+        //  thì tìm kiếm trong phần còn lại của mảng
+            //Tạo mảng mới với chỉ số loại chỉ số đầu
+            int index = arr.GetLowerBound(0) + 1;
+            int len = arr.GetLength(0) - 1;
             Array newarr = Array.CreateInstance(
-                                typeof(int), 
-                                new int[]{d}, 
-                                new int[]{x}
+                                typeof(int),
+                                new int[]{len},
+                                new int[]{index}
                             );
-            //Copy các phần tử từ vị trí thứ 2 sang mảng mới
-            Array.Copy(arr, x, newarr, x, d);
-            //Gọi đệ quy RecuSearch2(mảng_mới, value)
+            Array.Copy(arr, index, newarr, index, len);
             return RecuSearch2(newarr, value);
         }
     }
+    public static void Main(string[] args)
+    {
+        Console.Clear();
 
-    static int SentSearch(int[] arr, int value){
-        int x = arr[arr.Length - 1];
-        arr[arr.Length-1] = value;
-        int i=0;
-        while(arr[i]!=value)
-            i++;
-        arr[arr.Length-1] = x; //Không được thay đổi dữ liệu ban đầu
-        if(i<arr.Length-1 || arr[arr.Length-1]==value)
-        //if(i<arr.Length-1 || x==value)
-            return i;
-        else
-            return -1;
-    }
-    
-    static int BinSearch(int[] arr, int value){
-        int L = 0, R = arr.Length-1;
-        while(true){
-            int mid = (R+L)/2;//(int)Math.Floor((R-L)/2.0);
-            if(arr[mid]==value)
-                return mid;
-            else if(arr[mid]<value){
-                //Tìm bên phải
-                L = mid+1;
-            }else{
-                //Tìm bên trái
-                R = mid-1;
-            }
-        }
-    }
-    static int BinSearch2(int[] arr, int value, int from, int to){
-        return 0;
+        /*int[] arr = new int[]{3, 5, 6, 9};*/
+        Array arr = Array.CreateInstance(typeof(int), 4);
+        arr.SetValue(3, 0); arr.SetValue(5, 1);
+        arr.SetValue(6, 2); arr.SetValue(9, 3);
+        int value = 6;
+        /*int res = RecuSearch(arr, 0, value);*/
+        /*int res = SeqSearch(arr, value);*/
+        int res = RecuSearch2(arr, value);
+        Console.WriteLine($"Vi tri can tim: {res}");
+
+        Console.ReadLine();
     }
 }

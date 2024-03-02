@@ -38,18 +38,62 @@
             return RecuSearch2(newarr, value);
         }
     }
+    public static int SenSearch(int[] arr, int value){
+        int x = arr[arr.Length-1];
+        arr[arr.Length-1] = value;
+        int i = 0;
+        while(arr[i]!=value)
+            i++;
+        arr[arr.Length-1] = x;
+        if(i<arr.Length-1 || arr[arr.Length-1]==value)
+            return i;
+        else
+            return -1;
+    }
+    public static int SenRecuSearch(int[] arr, int from, int value){
+        int x = arr[arr.Length-1];
+        arr[arr.Length-1] = value;
+        if(arr[from]==value){
+            if(from<arr.Length-1)
+                return from;
+            else{
+                arr[arr.Length-1] = x;
+                if(arr[arr.Length-1]==value)
+                    return from;
+                else return -1;
+            }
+        }else{
+            arr[arr.Length-1] = x;
+            return SenRecuSearch(arr, from+1, value);
+        }
+    }
+    public static int BinSearch(int[] arr, int L, int R, int value){
+        while(true){
+            int mid = (L+R)/2;
+            if(arr[mid]==value)
+                return mid;
+            else if(value>arr[mid]){
+                L = mid + 1;
+            }else{
+                R = mid - 1;
+            }
+        }
+    }
     public static void Main(string[] args)
     {
         Console.Clear();
 
-        /*int[] arr = new int[]{3, 5, 6, 9};*/
-        Array arr = Array.CreateInstance(typeof(int), 4);
+        int[] arr = new int[]{3, 5, 6, 9, 12, 15};
+        /*Array arr = Array.CreateInstance(typeof(int), 4);
         arr.SetValue(3, 0); arr.SetValue(5, 1);
-        arr.SetValue(6, 2); arr.SetValue(9, 3);
-        int value = 6;
+        arr.SetValue(6, 2); arr.SetValue(9, 3);*/
+        int value = 12;
         /*int res = RecuSearch(arr, 0, value);*/
         /*int res = SeqSearch(arr, value);*/
-        int res = RecuSearch2(arr, value);
+        //int res = RecuSearch2(arr, value);
+        //int res = SenSearch(arr, value);
+        //int res = SenRecuSearch(arr, 0, value);
+        int res = BinSearch(arr, 0, arr.Length-1, value);
         Console.WriteLine($"Vi tri can tim: {res}");
 
         Console.ReadLine();
